@@ -1,0 +1,41 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4">Your Favorites</h1>
+    {% with messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="messages" style="background-color:rgb(10, 183, 10);margin-left:auto;margin-right: auto;">
+    {% for message in messages %}
+      {% if 'success' in message %}
+        <p class="success-message" style="background-color:rgb(10, 183, 10)">{{ message }}</p>
+      {% else %}
+        <p>{{ message }}</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+    {% if recipes %}
+    <div class="row justify-content-center">
+        {% for recipe in recipes %}
+            <div class="col-10 col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ recipe.image }}" alt="{{ recipe.title }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"style='font-weight: lighter;'>{{ recipe.title }}</h5>
+                        <form action="/remove-favorite" method="post">
+                            <input type="hidden" name="id" value="{{ recipe.id }}">
+                            <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                        </form>
+                        <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="btn btn-success mt-3">See details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>You have not added any recipes to your favorites.</p>
+    {% endif %}
+    <a href="{{ url_for('search_by_ingredients') }}" class="btn btn-secondary mt-3">Back to search</a>
+    </div>
+{% endblock %}

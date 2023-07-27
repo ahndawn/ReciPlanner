@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% block content %}
+<h1>Register</h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      {% if 'success' in message %}
+        <p class="success-message">{{ message }}</p>
+      {% else %}
+        <p>{{ message }}</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+{% endwith %}
+    <form action="/register" class='form' style='text-align:center' method="post">
+        <input type="text" style="width:100%" id="username" placeholder="Username" name="username"><br>
+        <input type="password" style="width:100%" id="password" placeholder="Password" name="password"><br>
+        <input type="submit" style='width:fit-content !important; color:white; font-weight:lighter; 'class='btn btn-success' value="Register">
+    </form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'home.html' %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+        <h1>{{ recipe.title }}</h1>
+        <img class="img-fluid mx-auto d-block" style='border-radius:5px; box-shadow: rgb(98, 98, 98) 2px 2px 2px; width:75%; height: auto;'src="{{ recipe.image }}" alt="{{ recipe.title }}">
+        <p class="text-center" style="margin-top: -7%; font-weight: lighter;">Servings: <b style="color: rgb(0, 147, 0);">{{ recipe.servings }}</b> Preparation time: <b style="color: rgb(0, 147, 0);">{{ recipe.readyInMinutes }} minutes</b></p>
+
+        <h1 class="text-center mt-4">Ingredients</h1>
+        <ul class="list-group">
+            {% for ingredient in recipe.extendedIngredients %}
+                <li class="list-group-item">{{ ingredient.original }}</li>
+            {% endfor %}
+        </ul>
+
+        <h1 class="text-center mt-4">Instructions</h1>
+        <ol class="list-group">
+            {% if recipe.analyzedInstructions %}
+                {% for step in recipe.analyzedInstructions[0].steps %}
+                    <li class="list-group-item">{{ step.step }}</li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">No instructions provided.</li>
+            {% endif %}
+        </ol>
+
+        <form class="text-center mt-4" action="/favorite-recipe" method="post">
+            <input type="hidden" name="id" value="{{ recipe.id }}">
+            <input type="hidden" name="title" value="{{ recipe.title }}">
+            <input type="hidden" name="image" value="{{ recipe.image }}">
+            <input class="btn btn-success" type="submit" value="Add to Favorites">
+        </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

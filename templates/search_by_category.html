@@ -1,0 +1,44 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class='container'>
+    <h1 class="text-center">Search by Category</h1>
+    <div class="row justify-content-center">
+        <div class="col-8 col-md-6">
+            <form action="/search-by-category" method="post">
+                <div class="form-group">
+                    <select name="category" class="form-control"style='text-align:center'>
+                        <option value="">Select a category</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="appetizers">Appetizers</option>
+                        <option value="desserts">Desserts</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-success btn-block">
+                </div>
+                <a href="{{ url_for('search_by_ingredients') }}" class="btn btn-secondary mt-3">Search By Ingredients</a>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    {% if recipes %}
+        <div class="row justify-content-center">
+            {% for recipe in recipes %}
+                <div class="col-10 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="{{ recipe.image }}" alt="{{ recipe.title }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title" style='font-weight: lighter;'>{{ recipe.title }}</h5>
+                            <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="btn btn-secondary mt-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
